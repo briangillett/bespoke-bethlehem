@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bespoke Bethlehem — Live Programme</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f4f2ee; --paper:#faf9f7; --ink:#1a1714; --muted:#7a746c; --border:#d8d4cc;
+  --critical:#c0392b; --crit-bg:#e8c4c0; --orange:#e86c1a; --green:#2a7a3a;
+  --row-h:26px; --label-w:340px; --id-w:40px; --dur-w:44px; --header-h:52px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;font-size:12px;height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+
+/* TOP BAR */
+.topbar{background:var(--ink);padding:0 20px;height:48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:3px solid var(--orange);}
+.topbar-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#fff;}
+.topbar-title span{color:var(--orange);}
+.topbar-right{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#888;display:flex;gap:16px;align-items:center;}
+.pc-badge{color:var(--orange);font-weight:600;}
+.refresh-btn{background:transparent;border:1px solid #444;color:#aaa;padding:3px 10px;border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:10px;cursor:pointer;transition:all 0.15s;}
+.refresh-btn:hover{border-color:var(--orange);color:var(--orange);}
+
+/* TABS */
+.tabs{background:#2c2824;display:flex;gap:2px;padding:4px 16px 0;flex-shrink:0;}
+.tab{padding:6px 16px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;color:#888;cursor:pointer;border-radius:3px 3px 0 0;border:1px solid transparent;border-bottom:none;transition:all 0.15s;user-select:none;}
+.tab.active{background:var(--bg);color:var(--ink);border-color:#555;}
+.tab:hover:not(.active){color:#ccc;}
+
+/* PANELS */
+.panel{display:none;flex:1;overflow:hidden;flex-direction:column;}
+.panel.active{display:flex;}
+
+/* LOADING */
+.loading-wrap{display:flex;align-items:center;justify-content:center;flex:1;flex-direction:column;gap:16px;}
+.spinner{width:36px;height:36px;border:3px solid #ddd;border-top-color:var(--orange);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-wrap p{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);}
+.error-wrap{display:flex;align-items:center;justify-content:center;flex:1;flex-direction:column;gap:8px;padding:20px;text-align:center;}
+.error-wrap h3{color:var(--critical);font-family:'IBM Plex Mono',monospace;font-size:13px;}
+.error-wrap p{color:var(--muted);font-size:11px;max-width:400px;line-height:1.6;}
+.error-wrap .fix{background:#fff8f0;border:1px solid var(--orange);border-radius:4px;padding:10px 16px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink);text-align:left;margin-top:8px;line-height:1.8;}
+
+/* LEGEND */
+.legend{background:var(--paper);border-bottom:1px solid var(--border);padding:5px 16px;display:flex;gap:10px;align-items:center;flex-shrink:0;flex-wrap:wrap;}
+.leg{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+.leg-bar{width:22px;height:10px;border-radius:2px;}
+.leg-div{width:1px;height:14px;background:var(--border);margin:0 2px;}
+.btn-sm{background:var(--orange);color:#fff;border:none;padding:4px 12px;border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:10px;cursor:pointer;font-weight:500;letter-spacing:1px;}
+.btn-sm:hover{background:#a84c10;}
+.btn-tog{background:transparent;color:var(--muted);border:1px solid var(--border);padding:3px 10px;border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:10px;cursor:pointer;}
+.btn-tog.on{background:var(--ink);color:#fff;border-color:var(--ink);}
+.updated{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;color:#bbb;}
+
+/* GANTT LAYOUT */
+.programme{display:flex;flex:1;overflow:hidden;}
+.lp{width:424px;flex-shrink:0;display:flex;flex-direction:column;border-right:2px solid var(--ink);background:var(--paper);overflow:hidden;}
+.lp-hdr{height:var(--header-h);border-bottom:2px solid var(--ink);display:grid;grid-template-columns:var(--id-w) 1fr var(--dur-w);background:#2c2824;flex-shrink:0;}
+.lp-hdr div{display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;color:#aaa;text-transform:uppercase;letter-spacing:1px;border-right:1px solid #444;padding:0 4px;}
+.lp-hdr div:last-child{border-right:none;}
+.lp-scroll{overflow-y:hidden;flex:1;}
+.rp{flex:1;overflow:hidden;display:flex;flex-direction:column;}
+.gsx{overflow-x:auto;overflow-y:hidden;display:flex;flex-direction:column;flex:1;}
+.ghdr{height:var(--header-h);flex-shrink:0;border-bottom:2px solid var(--ink);background:#2c2824;overflow:hidden;}
+.gmonths{display:flex;height:26px;border-bottom:1px solid #444;}
+.gmonth{display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:#ccc;border-right:1px solid #444;flex-shrink:0;white-space:nowrap;}
+.gmonth.q{background:rgba(200,140,60,0.12);}
+.gweeks{display:flex;height:26px;}
+.gweek{display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:9px;color:#666;border-right:1px solid #3a3630;flex-shrink:0;}
+.gbody{flex:1;overflow:auto;position:relative;}
+.grows{position:relative;}
+
+/* LEFT ROWS */
+.row{display:grid;grid-template-columns:var(--id-w) 1fr var(--dur-w);height:var(--row-h);border-bottom:1px solid var(--border);}
+.row:hover{background:rgba(0,0,0,0.03);}
+.row.sh{background:#2c2824;height:28px;border-bottom:1px solid #444;}
+.row.sh:hover{background:#2c2824;}
+.rid{display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);border-right:1px solid var(--border);flex-shrink:0;}
+.sh .rid{color:#666;border-right:1px solid #444;}
+.rlabel{display:flex;align-items:center;padding:0 8px;border-right:1px solid var(--border);overflow:hidden;}
+.rlabel span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;}
+.sh .rlabel span{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:2px;color:var(--orange);}
+.cdot{width:6px;height:6px;border-radius:50%;background:var(--critical);margin-right:6px;flex-shrink:0;}
+.rdur{display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);}
+.sh .rdur{color:#555;}
+
+/* GANTT BAR ROWS */
+.grow{height:var(--row-h);border-bottom:1px solid var(--border);position:relative;}
+.grow.sh{background:#2c2824;height:28px;border-bottom:1px solid #444;}
+.gbar{position:absolute;height:14px;top:50%;transform:translateY(-50%);border-radius:2px;cursor:pointer;overflow:visible;min-width:3px;transition:filter 0.12s;}
+.gbar:hover{filter:brightness(0.82);z-index:10;}
+.gbar.crit{height:16px;box-shadow:0 1px 4px rgba(192,57,43,0.35);}
+.gbar-inner{position:absolute;inset:0;border-radius:2px;overflow:hidden;}
+.prog{position:absolute;left:0;top:0;bottom:0;background:rgba(0,0,0,0.25);border-radius:2px 0 0 2px;}
+.slip-dot{position:absolute;right:-5px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:#f39c12;border:1.5px solid #e67e22;z-index:5;}
+.vline{position:absolute;top:0;bottom:0;width:1px;background:rgba(0,0,0,0.07);pointer-events:none;z-index:1;}
+.vline.mo{background:rgba(0,0,0,0.16);}
+.today-ln{position:absolute;top:0;bottom:0;width:2px;background:var(--orange);z-index:20;pointer-events:none;}
+.pc-ln{position:absolute;top:0;bottom:0;width:2px;background:var(--critical);z-index:19;opacity:0.55;pointer-events:none;}
+.ln-label{position:absolute;top:2px;left:3px;font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:600;letter-spacing:1px;white-space:nowrap;pointer-events:none;}
+
+/* BAR COLOURS — normal */
+.c-Preload    {background:#dfc9b4;border:1px solid #8b4513;}
+.c-Earthworks {background:#e8d8a8;border:1px solid #7a5c14;}
+.c-Stormwater {background:#b8dcea;border:1px solid #1a6b8a;}
+.c-Wastewater {background:#b8dcc4;border:1px solid #2a7a3a;}
+.c-Roading    {background:#e8e0c8;border:1px solid #9a7c30;}
+.c-Water      {background:#b8c8e8;border:1px solid #1a4a8a;}
+.c-Completion {background:#e0e0e0;border:1px solid #888;}
+/* Critical — overrides category */
+.gbar.crit    {background:#e8c4c0!important;border:1.5px solid var(--critical)!important;}
+
+/* STATS BAR */
+.stats{background:var(--ink);padding:5px 16px;display:flex;gap:18px;align-items:center;flex-shrink:0;border-top:1px solid #333;}
+.si{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#777;display:flex;align-items:center;gap:5px;}
+.si strong{color:#ddd;}
+.si.hi strong{color:var(--orange);}
+.si.cr strong{color:#e8c4c0;}
+
+/* TOOLTIP */
+.tt{position:fixed;background:var(--ink);color:#fff;padding:8px 12px;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;line-height:1.7;pointer-events:none;z-index:9999;display:none;max-width:300px;border-left:3px solid var(--orange);}
+.tt.crit{border-left-color:var(--critical);}
+.tt b{display:block;margin-bottom:2px;color:var(--orange);}
+.tt.crit b{color:#e8c4c0;}
+
+/* LOG / VO PANELS */
+.scroll-panel{flex:1;overflow-y:auto;padding:16px;}
+.sec-h{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:var(--orange);margin:0 0 10px;border-bottom:1px solid var(--border);padding-bottom:4px;}
+.log-tbl{width:100%;border-collapse:collapse;font-size:11px;}
+.log-tbl th{text-align:left;padding:8px 10px;background:#2c2824;color:#aaa;font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid var(--ink);}
+.log-tbl td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4;}
+.log-tbl tr:hover td{background:rgba(0,0,0,0.02);}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-family:'IBM Plex Mono',monospace;font-weight:500;}
+.p-c{background:#b8dcc4;color:#1a5c2a;}
+.p-p{background:#fdedc1;color:#7a5c00;}
+.p-b{background:#fde8e8;color:#8a2020;}
+.p-n{background:#e8e0c8;color:#5a4c14;}
+.vo-card{background:var(--paper);border:1px solid var(--border);border-left:3px solid var(--orange);border-radius:4px;padding:10px 14px;margin-bottom:8px;}
+.vo-card h4{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--orange);margin-bottom:4px;}
+.vo-card p{font-size:11px;color:var(--muted);line-height:1.5;}
+.empty{text-align:center;padding:30px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:11px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-title">Bespoke <span>Bethlehem</span> — Live Programme</div>
+  <div class="topbar-right">
+    <span id="pcBadge" class="pc-badge">PC: 27 Oct 2026</span>
+    <span id="updatedBadge" style="color:#666;font-size:10px">Loading...</span>
+    <button class="refresh-btn" onclick="loadAll()">↻ Refresh</button>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('gantt',this)">📊 Programme Gantt</div>
+  <div class="tab" onclick="showTab('log',this)">📋 Daily Log</div>
+  <div class="tab" onclick="showTab('vo',this)">⚠️ VO Register</div>
+</div>
+
+<!-- GANTT PANEL -->
+<div class="panel active" id="panel-gantt">
+  <div class="loading-wrap" id="gantt-loading">
+    <div class="spinner"></div>
+    <p>Loading programme from Google Sheet...</p>
+  </div>
+  <div id="gantt-error" style="display:none">
+    <div class="error-wrap">
+      <h3>⚠ Cannot load programme data</h3>
+      <p>The Google Sheet needs to be published for web access. This is a one-time setup.</p>
+      <div class="fix">
+        1. Open the Google Sheet<br>
+        2. File → Share → Publish to web<br>
+        3. Choose "Entire document" → "CSV"<br>
+        4. Click Publish → OK<br>
+        5. Reload this page
+      </div>
+    </div>
+  </div>
+  <div id="gantt-main" style="display:none;flex:1;overflow:hidden;flex-direction:column;display:none">
+    <div class="legend">
+      <div class="leg"><div class="leg-bar" style="background:#e8c4c0;border:1.5px solid #c0392b"></div>Critical</div>
+      <div class="leg-div"></div>
+      <div class="leg"><div class="leg-bar" style="background:#dfc9b4;border:1px solid #8b4513"></div>Preload</div>
+      <div class="leg"><div class="leg-bar" style="background:#e8d8a8;border:1px solid #7a5c14"></div>Earthworks</div>
+      <div class="leg"><div class="leg-bar" style="background:#b8dcea;border:1px solid #1a6b8a"></div>Stormwater</div>
+      <div class="leg"><div class="leg-bar" style="background:#b8dcc4;border:1px solid #2a7a3a"></div>Wastewater</div>
+      <div class="leg"><div class="leg-bar" style="background:#e8e0c8;border:1px solid #9a7c30"></div>Roading</div>
+      <div class="leg"><div class="leg-bar" style="background:#b8c8e8;border:1px solid #1a4a8a"></div>Water</div>
+      <div class="leg-div"></div>
+      <div class="leg"><div style="width:8px;height:8px;background:#f39c12;border-radius:50%;border:1px solid #e67e22"></div>Slippage</div>
+      <button class="btn-tog on" id="togAll" onclick="setFilter('all',this)">All Tasks</button>
+      <button class="btn-tog" id="togCrit" onclick="setFilter('crit',this)">Critical Only</button>
+      <button class="btn-sm" onclick="scrollToToday()">→ Today</button>
+    </div>
+    <div class="programme" id="programme">
+      <div class="lp">
+        <div class="lp-hdr">
+          <div>ID</div>
+          <div style="justify-content:flex-start;padding-left:8px">Task Name</div>
+          <div>Days</div>
+        </div>
+        <div class="lp-scroll" id="lpScroll"><div id="leftRows"></div></div>
+      </div>
+      <div class="rp">
+        <div class="gsx" id="gsx">
+          <div class="ghdr" id="ghdr">
+            <div class="gmonths" id="gmonths"></div>
+            <div class="gweeks" id="gweeks"></div>
+          </div>
+          <div class="gbody" id="gbody">
+            <div class="grows" id="grows"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="stats" id="stats"></div>
+  </div>
+</div>
+
+<!-- LOG PANEL -->
+<div class="panel" id="panel-log">
+  <div class="scroll-panel">
+    <div class="sec-h">Daily EOD Reports</div>
+    <div id="logContent"><div class="empty">Loading...</div></div>
+  </div>
+</div>
+
+<!-- VO PANEL -->
+<div class="panel" id="panel-vo">
+  <div class="scroll-panel">
+    <div class="sec-h">Variation Order Register</div>
+    <div id="voContent"><div class="empty">Loading...</div></div>
+  </div>
+</div>
+
+<div class="tt" id="tt"></div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────
+const SHEET_ID   = "1XTTxD3IQ7B-9Dzo0fWGYUF6xQZ4FtLe2IAMEXbLrXxg";
+const TASKS_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Programme%20Tasks`;
+const LOG_URL    = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Slippage%20Log`;
+const VO_URL     = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=VO%20Register`;
+const PC_DATE    = new Date(2026,9,27);
+const PROG_START = new Date(2026,2,15);  // 15 Mar — slightly before first task
+const PROG_END   = new Date(2026,10,10); // 10 Nov
+const TODAY      = new Date();
+const DAY_PX     = 4.5;
+
+let allTasks = [];
+let filterMode = 'all';
+
+// ── TABS ──────────────────────────────────────────────────
+function showTab(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── CSV PARSER ────────────────────────────────────────────
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  return lines.map(line => {
+    const cells = []; let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"') { inQ = !inQ; }
+      else if (c === ',' && !inQ) { cells.push(cur.trim()); cur = ''; }
+      else { cur += c; }
+    }
+    cells.push(cur.trim());
+    return cells;
+  });
+}
+
+// ── LOAD ALL DATA ─────────────────────────────────────────
+async function loadAll() {
+  document.getElementById('updatedBadge').textContent = 'Refreshing...';
+  try {
+    await Promise.all([loadTasks(), loadLog(), loadVO()]);
+    const now = new Date();
+    document.getElementById('updatedBadge').textContent =
+      'Updated ' + now.toLocaleTimeString('en-NZ', {hour:'2-digit',minute:'2-digit'});
+  } catch(e) {
+    document.getElementById('updatedBadge').textContent = 'Error — check console';
+    console.error(e);
+  }
+}
+
+// ── LOAD TASKS ────────────────────────────────────────────
+async function loadTasks() {
+  try {
+    const resp = await fetch(TASKS_URL);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const text = await resp.text();
+    const rows = parseCSV(text);
+    // Skip first 3 rows (title + 2 header rows), find data rows
+    const dataRows = rows.slice(3).filter(r => r[0] && !isNaN(r[0]) && r[0].trim() !== '');
+    allTasks = dataRows.map(r => ({
+      id:       parseInt(r[0]) || 0,
+      cat:      (r[1]||'').trim(),
+      name:     (r[2]||'').trim(),
+      start:    (r[3]||'').trim(),
+      finish:   (r[4]||'').trim(),
+      dur:      parseInt(r[5]) || 0,
+      critical: (r[6]||'').trim().toUpperCase() === 'YES',
+      float:    parseFloat(r[7]) || 0,
+      preds:    (r[8]||'').trim(),
+      succs:    (r[9]||'').trim(),
+      status:   (r[10]||'Not Started').trim(),
+      pct:      parseFloat(r[11]) || 0,
+      slippage: parseFloat(r[12]) || 0,
+    }));
+    document.getElementById('gantt-loading').style.display = 'none';
+    document.getElementById('gantt-error').style.display = 'none';
+    const gm = document.getElementById('gantt-main');
+    gm.style.display = 'flex';
+    gm.style.flexDirection = 'column';
+    gm.style.flex = '1';
+    gm.style.overflow = 'hidden';
+    buildGantt();
+  } catch(e) {
+    // If fetch fails, show the publish instructions
+    document.getElementById('gantt-loading').style.display = 'none';
+    document.getElementById('gantt-error').style.display = 'flex';
+    console.error('Tasks load failed:', e);
+    // Fall back to hardcoded data
+    loadFallbackData();
+  }
+}
+
+// ── FALLBACK: hardcoded task data if sheet not yet published ─
+function loadFallbackData() {
+  allTasks = [
+    {id:70,cat:"Preload",name:"Lot 33 Preload — Cart Material (DN08)",start:"15/04/2026",finish:"17/04/2026",dur:3,critical:true,float:0,pct:100,slippage:0},
+    {id:71,cat:"Preload",name:"Lot 33 — Preloading Active",start:"20/04/2026",finish:"16/09/2026",dur:108,critical:true,float:0,pct:25,slippage:0},
+    {id:72,cat:"Preload",name:"Lot 33 — Remove Preload",start:"17/09/2026",finish:"21/09/2026",dur:3,critical:false,float:0,pct:0,slippage:0},
+    {id:73,cat:"Earthworks",name:"Lot 33 — Level & Compact Structural Fill",start:"22/09/2026",finish:"28/09/2026",dur:5,critical:false,float:0,pct:0,slippage:0},
+    {id:65,cat:"Preload",name:"Area 6 Preload — Cart Material On Site",start:"20/04/2026",finish:"01/05/2026",dur:10,critical:true,float:0,pct:100,slippage:0},
+    {id:66,cat:"Preload",name:"Area 6 — Preloading Active",start:"04/05/2026",finish:"16/09/2026",dur:98,critical:true,float:0,pct:20,slippage:0},
+    {id:67,cat:"Preload",name:"Area 6 — Remove Preload",start:"17/09/2026",finish:"07/10/2026",dur:15,critical:false,float:5,pct:0,slippage:0},
+    {id:68,cat:"Earthworks",name:"Area 6 — Level & Compact Structural Fill",start:"08/10/2026",finish:"21/10/2026",dur:10,critical:false,float:0,pct:0,slippage:0},
+    {id:41,cat:"Earthworks",name:"Cut/Fill Area 5 (109 days)",start:"01/05/2026",finish:"30/09/2026",dur:109,critical:true,float:0,pct:0,slippage:0},
+    {id:42,cat:"Earthworks",name:"Area 6 Structural Fill → Area 5",start:"01/05/2026",finish:"28/05/2026",dur:20,critical:false,float:10,pct:0,slippage:0},
+    {id:45,cat:"Preload",name:"Area 5 — Preload Channel",start:"01/05/2026",finish:"16/09/2026",dur:99,critical:true,float:0,pct:0,slippage:0},
+    {id:46,cat:"Preload",name:"Area 5 — Remove Preload",start:"17/09/2026",finish:"30/09/2026",dur:10,critical:false,float:0,pct:0,slippage:0},
+    {id:47,cat:"Earthworks",name:"Cut/Fill Stage 2A",start:"01/06/2026",finish:"18/06/2026",dur:14,critical:false,float:30,pct:0,slippage:0},
+    {id:36,cat:"Earthworks",name:"Cut/Fill Area 3",start:"12/10/2026",finish:"14/10/2026",dur:3,critical:false,float:0,pct:0,slippage:0},
+    {id:76,cat:"Stormwater",name:"Wingwall A0 → SWMH A1",start:"27/04/2026",finish:"01/05/2026",dur:5,critical:true,float:0,pct:100,slippage:0},
+    {id:81,cat:"Stormwater",name:"SWMH E2 → A0",start:"27/04/2026",finish:"30/04/2026",dur:4,critical:true,float:0,pct:100,slippage:0},
+    {id:83,cat:"Stormwater",name:"SWMH E1 → A4",start:"27/04/2026",finish:"30/04/2026",dur:4,critical:false,float:5,pct:100,slippage:0},
+    {id:84,cat:"Stormwater",name:"SWMH E1 → A5",start:"01/05/2026",finish:"06/05/2026",dur:4,critical:false,float:5,pct:100,slippage:0},
+    {id:85,cat:"Stormwater",name:"SWMH E1 → Stage 4",start:"07/05/2026",finish:"12/05/2026",dur:4,critical:false,float:10,pct:100,slippage:0},
+    {id:86,cat:"Stormwater",name:"Insitu Manhole A1",start:"19/05/2026",finish:"25/06/2026",dur:28,critical:false,float:8,pct:0,slippage:0},
+    {id:87,cat:"Stormwater",name:"Finish Manholes 8off",start:"26/06/2026",finish:"13/07/2026",dur:12,critical:false,float:8,pct:0,slippage:0},
+    {id:88,cat:"Stormwater",name:"Lot/Unit Connections 18off",start:"04/05/2026",finish:"12/06/2026",dur:30,critical:false,float:5,pct:0,slippage:0},
+    {id:91,cat:"Stormwater",name:"Rock Rip Rap for Creek",start:"08/05/2026",finish:"21/05/2026",dur:10,critical:false,float:15,pct:0,slippage:0},
+    {id:102,cat:"Stormwater",name:"SW Private: Install Laterals 9off",start:"03/04/2026",finish:"04/05/2026",dur:14,critical:true,float:0,pct:100,slippage:0},
+    {id:103,cat:"Stormwater",name:"SW Private: Finish Manholes 9off",start:"04/05/2026",finish:"25/05/2026",dur:15,critical:false,float:5,pct:0,slippage:0},
+    {id:116,cat:"Wastewater",name:"WW Public: Finish Manholes 6off",start:"15/04/2026",finish:"28/04/2026",dur:10,critical:false,float:10,pct:100,slippage:0},
+    {id:117,cat:"Wastewater",name:"WW Public: CCTV + Flush",start:"11/05/2026",finish:"15/05/2026",dur:5,critical:true,float:0,pct:0,slippage:0},
+    {id:118,cat:"Wastewater",name:"WW Public: Council Review",start:"18/05/2026",finish:"22/05/2026",dur:5,critical:true,float:0,pct:0,slippage:0},
+    {id:119,cat:"Wastewater",name:"TCC Approval — Hook-on EX SSMH86045",start:"25/05/2026",finish:"29/05/2026",dur:5,critical:true,float:0,pct:0,slippage:0},
+    {id:120,cat:"Wastewater",name:"Decommission Existing WW Line",start:"01/06/2026",finish:"09/06/2026",dur:7,critical:false,float:10,pct:0,slippage:0},
+    {id:125,cat:"Wastewater",name:"WW Private: SSMH 1-7 → 1-8",start:"13/04/2026",finish:"16/04/2026",dur:4,critical:true,float:0,pct:100,slippage:0},
+    {id:126,cat:"Wastewater",name:"WW Private: SSMH 1-8 → 1-9",start:"17/04/2026",finish:"22/04/2026",dur:4,critical:true,float:0,pct:100,slippage:0},
+    {id:127,cat:"Wastewater",name:"WW Private: SSMH 1-9 → 1-10",start:"23/04/2026",finish:"28/04/2026",dur:4,critical:true,float:0,pct:100,slippage:0},
+    {id:128,cat:"Wastewater",name:"WW Private: SSMH 1-9 → SSMH 2-1",start:"29/04/2026",finish:"04/05/2026",dur:4,critical:true,float:0,pct:100,slippage:0},
+    {id:129,cat:"Wastewater",name:"WW Private: SSMH 2-1 → 2-2",start:"05/05/2026",finish:"08/05/2026",dur:4,critical:true,float:0,pct:100,slippage:0},
+    {id:130,cat:"Wastewater",name:"WW Private: SSMH 2-2 → 2-3",start:"11/05/2026",finish:"14/05/2026",dur:4,critical:true,float:0,pct:0,slippage:0},
+    {id:131,cat:"Wastewater",name:"WW Private: Lot/Unit Connections 11off",start:"15/05/2026",finish:"04/06/2026",dur:15,critical:true,float:0,pct:0,slippage:0},
+    {id:132,cat:"Wastewater",name:"WW Private: Finish Manholes 8off",start:"05/06/2026",finish:"22/06/2026",dur:12,critical:false,float:5,pct:0,slippage:0},
+    {id:157,cat:"Roading",name:"Roading: Subgrade Prep & Improvement",start:"04/05/2026",finish:"22/06/2026",dur:35,critical:true,float:0,pct:0,slippage:0},
+    {id:158,cat:"Roading",name:"Roading: Subgrade Trimming & Compaction",start:"08/05/2026",finish:"26/06/2026",dur:35,critical:true,float:0,pct:0,slippage:0},
+    {id:163,cat:"Roading",name:"Roading: Road Surfacing Layers",start:"22/05/2026",finish:"09/06/2026",dur:12,critical:true,float:0,pct:0,slippage:0},
+    {id:164,cat:"Roading",name:"Roading: Asphalt 35mm",start:"08/06/2026",finish:"15/06/2026",dur:5,critical:true,float:0,pct:0,slippage:0},
+    {id:154,cat:"Roading",name:"Standard Kerb & Channel",start:"15/06/2026",finish:"19/06/2026",dur:4,critical:true,float:0,pct:0,slippage:0},
+    {id:136,cat:"Roading",name:"Utilities: Road Common Service Trench",start:"29/06/2026",finish:"03/07/2026",dur:5,critical:true,float:0,pct:0,slippage:0},
+    {id:137,cat:"Roading",name:"Utilities: 50mm uPVC Ducts",start:"09/07/2026",finish:"15/07/2026",dur:5,critical:false,float:5,pct:0,slippage:0},
+    {id:144,cat:"Water",name:"Water: 180mm PE100 Main",start:"06/07/2026",finish:"23/07/2026",dur:14,critical:true,float:0,pct:0,slippage:0},
+    {id:147,cat:"Water",name:"Water: Swap",start:"24/07/2026",finish:"30/07/2026",dur:5,critical:true,float:0,pct:0,slippage:0},
+    {id:148,cat:"Water",name:"Water: Pressure Testing",start:"31/07/2026",finish:"06/08/2026",dur:5,critical:true,float:0,pct:0,slippage:0},
+    {id:149,cat:"Water",name:"Water: Disinfection & FAC Test",start:"07/08/2026",finish:"13/08/2026",dur:5,critical:true,float:0,pct:0,slippage:0},
+    {id:150,cat:"Water",name:"Water: E-coli Sampling",start:"14/08/2026",finish:"18/08/2026",dur:3,critical:true,float:0,pct:0,slippage:0},
+    {id:151,cat:"Water",name:"Water: Connection to Public Main",start:"24/08/2026",finish:"25/08/2026",dur:2,critical:true,float:0,pct:0,slippage:0},
+    {id:152,cat:"Water",name:"Water: Commissioning",start:"26/08/2026",finish:"26/08/2026",dur:1,critical:true,float:0,pct:0,slippage:0},
+    {id:172,cat:"Completion",name:"SITE COMPLETE",start:"20/10/2026",finish:"21/10/2026",dur:2,critical:true,float:0,pct:0,slippage:0},
+    {id:173,cat:"Completion",name:"Final Inspection",start:"22/10/2026",finish:"22/10/2026",dur:1,critical:true,float:0,pct:0,slippage:0},
+    {id:174,cat:"Completion",name:"Cleanup & Waste Removal",start:"23/10/2026",finish:"23/10/2026",dur:1,critical:false,float:0,pct:0,slippage:0},
+    {id:175,cat:"Completion",name:"Removal of Facilities",start:"26/10/2026",finish:"27/10/2026",dur:2,critical:false,float:0,pct:0,slippage:0},
+  ];
+  document.getElementById('gantt-loading').style.display = 'none';
+  document.getElementById('gantt-error').style.display = 'none';
+  const gm = document.getElementById('gantt-main');
+  gm.style.display = 'flex';
+  gm.style.flexDirection = 'column';
+  gm.style.flex = '1';
+  gm.style.overflow = 'hidden';
+  buildGantt();
+}
+
+// ── DATE HELPERS ──────────────────────────────────────────
+function dParse(s) {
+  if (!s) return null;
+  const p = s.split('/');
+  if (p.length === 3) return new Date(+p[2], +p[1]-1, +p[0]);
+  return null;
+}
+function dpx(d) { return Math.max(0, (d - PROG_START) / 86400000 * DAY_PX); }
+function totalW() { return (PROG_END - PROG_START) / 86400000 * DAY_PX; }
+
+// ── SECTION GROUPING ──────────────────────────────────────
+const SECTIONS = [
+  {label:"EARTHWORKS & PRELOADS",  cats:["Preload","Earthworks"]},
+  {label:"STORMWATER PUBLIC",       ids:[76,81,82,83,84,85,86,87,88,89,90,91]},
+  {label:"STORMWATER PRIVATE",      ids:[102,103,104,105,106]},
+  {label:"WASTEWATER PUBLIC",       ids:[115,116,117,118,119,120]},
+  {label:"WASTEWATER PRIVATE",      ids:[125,126,127,128,129,130,131,132,133]},
+  {label:"ROADING & SERVICES",      cats:["Roading"]},
+  {label:"WATER SUPPLY",            cats:["Water"]},
+  {label:"SITE COMPLETION",         cats:["Completion"]},
+];
+
+// ── BUILD GANTT ───────────────────────────────────────────
+function buildGantt() {
+  const TW = totalW();
+  const lr = document.getElementById('leftRows');
+  const gr = document.getElementById('grows');
+  lr.innerHTML = ''; gr.innerHTML = '';
+  buildHeader(TW);
+
+  const byId = {};
+  allTasks.forEach(t => byId[t.id] = t);
+
+  let rowCount = 0;
+  SECTIONS.forEach(sec => {
+    let tasks = [];
+    if (sec.ids) tasks = sec.ids.map(id => byId[id]).filter(Boolean);
+    else tasks = allTasks.filter(t => sec.cats && sec.cats.includes(t.cat));
+    if (!tasks.length) return;
+
+    const hide = filterMode === 'crit' ? '' : '';
+
+    // Section header
+    lr.insertAdjacentHTML('beforeend',
+      `<div class="row sh"><div class="rid"></div><div class="rlabel"><span>${sec.label}</span></div><div class="rdur"></div></div>`);
+    const shg = document.createElement('div');
+    shg.className = 'grow sh'; shg.style.width = TW+'px';
+    gr.appendChild(shg);
+
+    tasks.forEach(t => {
+      const hidden = (filterMode === 'crit' && !t.critical) ? 'style="display:none"' : '';
+      const sd = dParse(t.start), ed = dParse(t.finish);
+      if (!sd || !ed) return;
+      const x = dpx(sd);
+      const w = Math.max(4, (ed - sd) / 86400000 * DAY_PX);
+      const pw = t.pct > 0 ? Math.round(w * t.pct / 100) : 0;
+
+      lr.insertAdjacentHTML('beforeend',
+        `<div class="row" data-id="${t.id}" ${hidden}>
+          <div class="rid">${t.id}</div>
+          <div class="rlabel">
+            ${t.critical ? '<div class="cdot"></div>' : ''}
+            <span title="${t.name}">${t.name}</span>
+          </div>
+          <div class="rdur">${t.dur}d</div>
+        </div>`);
+
+      const grow = document.createElement('div');
+      grow.className = 'grow';
+      grow.dataset.id = t.id;
+      grow.style.width = TW + 'px';
+      if (filterMode === 'crit' && !t.critical) grow.style.display = 'none';
+      grow.innerHTML =
+        `<div class="gbar c-${t.cat}${t.critical?' crit':''}"
+              style="left:${x}px;width:${w}px"
+              data-id="${t.id}" data-name="${t.name}"
+              data-start="${t.start}" data-end="${t.finish}"
+              data-dur="${t.dur}" data-crit="${t.critical}"
+              data-pct="${t.pct}" data-slip="${t.slippage}" data-float="${t.float}">
+          <div class="gbar-inner">
+            ${pw > 0 ? `<div class="prog" style="width:${pw}px"></div>` : ''}
+          </div>
+          ${t.slippage > 0 ? '<div class="slip-dot" title="Slippage logged"></div>' : ''}
+        </div>`;
+      gr.appendChild(grow);
+      rowCount++;
+    });
+  });
+
+  // Lines
+  addLine(gr, 'today-ln', dpx(TODAY), TW, `<div class="ln-label" style="color:var(--orange)">TODAY</div>`);
+  addLine(gr, 'pc-ln',    dpx(PC_DATE), TW, `<div class="ln-label" style="color:var(--critical)">PC</div>`);
+
+  setupScroll(TW, rowCount);
+  setupTooltip();
+  buildStats();
+  setTimeout(scrollToToday, 100);
+}
+
+function addLine(parent, cls, x, TW, labelHTML) {
+  const el = document.createElement('div');
+  el.className = cls; el.style.left = x + 'px';
+  if (labelHTML) el.innerHTML = labelHTML;
+  parent.appendChild(el);
+}
+
+function buildHeader(TW) {
+  const gm = document.getElementById('gmonths');
+  const gw = document.getElementById('gweeks');
+  const gr = document.getElementById('grows');
+  gm.innerHTML = ''; gw.innerHTML = '';
+
+  // Months
+  let cur = new Date(PROG_START); cur.setDate(1);
+  while (cur < PROG_END) {
+    const mEnd = new Date(cur.getFullYear(), cur.getMonth()+1, 1);
+    const mW = (Math.min(mEnd, PROG_END) - Math.max(cur, PROG_START)) / 86400000 * DAY_PX;
+    const mn = cur.toLocaleString('en-NZ',{month:'short'}).toUpperCase()+' '+cur.getFullYear().toString().slice(2);
+    const isQ = [0,3,6,9].includes(cur.getMonth());
+    gm.insertAdjacentHTML('beforeend', `<div class="gmonth${isQ?' q':''}" style="width:${mW}px">${mn}</div>`);
+    // Month vline
+    const vl = document.createElement('div'); vl.className='vline mo';
+    vl.style.left = dpx(new Date(Math.max(cur,PROG_START)))+'px';
+    gr.appendChild(vl);
+    cur.setMonth(cur.getMonth()+1);
+  }
+
+  // Weeks
+  let wc = new Date(PROG_START);
+  const dow = wc.getDay(); if(dow!==1) wc.setDate(wc.getDate()-(dow===0?6:dow-1));
+  while (wc < PROG_END) {
+    const wlabel = wc.toLocaleDateString('en-NZ',{day:'numeric',month:'numeric'});
+    gw.insertAdjacentHTML('beforeend', `<div class="gweek" style="width:${7*DAY_PX}px">${wlabel}</div>`);
+    if (wc >= PROG_START) {
+      const vl = document.createElement('div'); vl.className='vline';
+      vl.style.left = dpx(wc)+'px';
+      gr.appendChild(vl);
+    }
+    wc.setDate(wc.getDate()+7);
+  }
+  gm.style.minWidth = TW+'px'; gw.style.minWidth = TW+'px';
+}
+
+function setupScroll(TW, rowCount) {
+  const gsx = document.getElementById('gsx');
+  const ghdr = document.getElementById('ghdr');
+  const gbody = document.getElementById('gbody');
+  const lpScroll = document.getElementById('lpScroll');
+  const grows = document.getElementById('grows');
+
+  grows.style.width = TW+'px';
+  grows.style.minHeight = ((rowCount + SECTIONS.length + 2) * 27) + 'px';
+
+  const prog = document.getElementById('programme');
+  const avail = prog.clientHeight - 6;
+  lpScroll.style.height = avail + 'px';
+  lpScroll.style.overflowY = 'auto';
+  gbody.style.height = avail + 'px';
+  gbody.style.overflowY = 'auto';
+  gsx.style.overflowX = 'auto';
+  gsx.style.overflowY = 'hidden';
+
+  // Sync horizontal
+  gsx.addEventListener('scroll', () => {
+    ghdr.scrollLeft = gsx.scrollLeft;
+    grows.style.transform = `translateX(-${gsx.scrollLeft}px)`;
+  });
+  // Sync vertical
+  let syncing = false;
+  lpScroll.addEventListener('scroll', () => { if(!syncing){syncing=true;gbody.scrollTop=lpScroll.scrollTop;syncing=false;} });
+  gbody.addEventListener('scroll', () => { if(!syncing){syncing=true;lpScroll.scrollTop=gbody.scrollTop;syncing=false;} });
+}
+
+function scrollToToday() {
+  const gsx = document.getElementById('gsx');
+  if (gsx) gsx.scrollLeft = Math.max(0, dpx(TODAY) - 180);
+}
+
+function setupTooltip() {
+  const tt = document.getElementById('tt');
+  const gr = document.getElementById('grows');
+  gr.addEventListener('mouseover', e => {
+    const b = e.target.closest('.gbar');
+    if (!b) { tt.style.display='none'; return; }
+    const crit = b.dataset.crit === 'true';
+    tt.className = 'tt' + (crit?' crit':'');
+    tt.innerHTML = `<b>${b.dataset.name}</b>
+      ID: ${b.dataset.id} | ${b.dataset.dur} days<br>
+      ${b.dataset.start} → ${b.dataset.end}<br>
+      Progress: ${b.dataset.pct}% | Float: ${b.dataset.float}d<br>
+      ${b.dataset.slip>0?`<span style="color:#f39c12">⚠ ${b.dataset.slip}d slippage logged</span><br>`:''}
+      ${crit?'<span style="color:#e8c4c0;font-weight:600">⚠ CRITICAL PATH — Zero float</span>':'Non-critical — has float'}`;
+    tt.style.display = 'block';
+  });
+  gr.addEventListener('mousemove', e => {
+    if (tt.style.display==='none') return;
+    tt.style.left=(e.clientX+14)+'px'; tt.style.top=(e.clientY-8)+'px';
+  });
+  gr.addEventListener('mouseleave', () => tt.style.display='none');
+}
+
+function setFilter(mode, el) {
+  filterMode = mode;
+  document.querySelectorAll('.btn-tog').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  buildGantt();
+}
+
+function buildStats() {
+  const daysToPC = Math.round((PC_DATE - TODAY) / 86400000);
+  const crit = allTasks.filter(t=>t.critical).length;
+  const active = allTasks.filter(t=>{
+    const s=dParse(t.start), e=dParse(t.finish);
+    return s&&e&&s<=TODAY&&e>=TODAY;
+  }).length;
+  const slipped = allTasks.filter(t=>t.slippage>0).length;
+  const done = allTasks.filter(t=>t.pct===100).length;
+  document.getElementById('stats').innerHTML =
+    `<div class="si hi"><strong>${daysToPC}</strong> days to PC</div>
+     <div class="si"><strong>${allTasks.length}</strong> tasks</div>
+     <div class="si cr"><strong>${crit}</strong> critical path</div>
+     <div class="si"><strong>${active}</strong> active today</div>
+     <div class="si"><strong>${done}</strong> complete</div>
+     ${slipped?`<div class="si" style="color:#f39c12"><strong>${slipped}</strong> with slippage</div>`:''}
+     <div class="si" style="margin-left:auto;font-size:9px;color:#444">Rev A2 · 260428-A0 · BGT Developments</div>`;
+  document.getElementById('pcBadge').textContent = `PC: 27 Oct 2026 (${daysToPC}d)`;
+}
+
+// ── LOG ───────────────────────────────────────────────────
+async function loadLog() {
+  try {
+    const resp = await fetch(LOG_URL);
+    const text = await resp.text();
+    const rows = parseCSV(text).slice(3).filter(r=>r[0]&&r[0].trim());
+    const el = document.getElementById('logContent');
+    if (!rows.length) { el.innerHTML='<div class="empty">No EOD reports logged yet.</div>'; return; }
+    const pillC = s => s.toLowerCase().includes('complete')?'p-c':s.toLowerCase().includes('partial')?'p-p':s.toLowerCase().includes('block')?'p-b':'p-n';
+    el.innerHTML = `<table class="log-tbl">
+      <thead><tr><th>Date</th><th>Project</th><th>PM</th><th>Status</th><th>Reason</th><th>Notes</th><th>Tomorrow</th></tr></thead>
+      <tbody>${rows.slice().reverse().map(r=>`<tr>
+        <td style="font-family:'IBM Plex Mono',monospace;font-size:10px;white-space:nowrap">${r[0]}</td>
+        <td style="font-size:11px">${r[1]||''}</td>
+        <td style="font-size:11px">${r[2]||''}</td>
+        <td><span class="pill ${pillC(r[3]||'')}">${r[3]||''}</span></td>
+        <td style="font-size:11px;color:var(--muted)">${r[4]||''}</td>
+        <td style="font-size:11px;max-width:180px">${r[7]||''}</td>
+        <td style="font-size:11px;color:var(--muted)">${r[8]||''}</td>
+      </tr>`).join('')}</tbody></table>`;
+  } catch(e) { document.getElementById('logContent').innerHTML='<div class="empty">Could not load log.</div>'; }
+}
+
+// ── VO ────────────────────────────────────────────────────
+async function loadVO() {
+  try {
+    const resp = await fetch(VO_URL);
+    const text = await resp.text();
+    const rows = parseCSV(text).slice(3).filter(r=>r[0]&&r[0].trim());
+    const el = document.getElementById('voContent');
+    const open = rows.filter(r=>(r[6]||'').includes('Pending'));
+    if (!open.length) { el.innerHTML='<div class="empty">No open variation orders.</div>'; return; }
+    el.innerHTML = open.map(r=>`
+      <div class="vo-card">
+        <h4>${r[0]} — ${r[1]} | ${r[2]}</h4>
+        <p>${r[5]}</p>
+        <p style="margin-top:6px"><span class="pill p-n">${r[6]}</span></p>
+      </div>`).join('');
+  } catch(e) { document.getElementById('voContent').innerHTML='<div class="empty">Could not load VO register.</div>'; }
+}
+
+// ── INIT ──────────────────────────────────────────────────
+loadAll();
+setInterval(loadAll, 600000); // auto-refresh every 10 min
+</script>
+</body>
+</html>
