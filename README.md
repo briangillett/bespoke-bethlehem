@@ -1,2 +1,0 @@
-# bespoke-bethlehem
-Live Program
