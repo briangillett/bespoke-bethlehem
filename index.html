@@ -24,7 +24,6 @@
   h1 .sub{font-size:12px;font-weight:400;color:var(--muted);margin-left:8px}
   .pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:0.4px}
   .pill.risk{background:#faeeda;color:#854f0b}
-  .pill.crit{background:#fcebeb;color:#a32d2d}
   .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
   .btn{font-size:12px;font-weight:500;padding:6px 12px;border:1px solid var(--line2);background:var(--panel);border-radius:7px;cursor:pointer;color:var(--ink);transition:.12s}
   .btn:hover{background:#f1efe8}
@@ -40,22 +39,23 @@
   .wrap{padding:16px 20px 60px}
   .gantt{background:var(--panel);border:1px solid var(--line2);border-radius:10px;overflow:hidden}
   .scroll{overflow-x:auto}
-  .grid{min-width:1100px;position:relative}
+  .grid{min-width:1180px;position:relative}
   .months{display:flex;border-bottom:1px solid var(--line2);position:sticky;top:0;background:var(--panel);z-index:10}
-  .lbl-head{min-width:300px;max-width:300px;padding:8px 12px;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-right:1px solid var(--line2);display:flex;align-items:center}
+  .lbl-head{min-width:330px;max-width:330px;padding:8px 12px;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-right:1px solid var(--line2);display:flex;align-items:center}
   .month-cells{display:flex;flex:1;position:relative}
-  .mcell{flex:1;text-align:center;font-size:11px;font-weight:600;color:var(--muted);padding:8px 2px;border-right:1px solid var(--line);min-width:64px}
+  .mcell{flex:1;text-align:center;font-size:11px;font-weight:600;color:var(--muted);padding:8px 2px;border-right:1px solid var(--line);min-width:58px}
   .section{border-bottom:1px solid var(--line)}
   .sec-title{background:#f1efe8;padding:6px 12px;font-size:11px;font-weight:700;color:#444441;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--line)}
-  .row{display:flex;align-items:stretch;border-bottom:1px solid var(--line);min-height:30px}
+  .row{display:flex;align-items:stretch;border-bottom:1px solid var(--line);min-height:28px}
   .row:hover{background:#fbfaf7}
-  .rlabel{min-width:300px;max-width:300px;padding:5px 12px;font-size:12px;border-right:1px solid var(--line2);display:flex;align-items:center;gap:7px}
-  .rlabel .id{color:var(--muted);font-size:10px;min-width:24px}
+  .rlabel{min-width:330px;max-width:330px;padding:4px 12px;font-size:12px;border-right:1px solid var(--line2);display:flex;align-items:center;gap:7px}
+  .rlabel .id{color:var(--muted);font-size:10px;min-width:24px;text-align:right}
   .rlabel .nm{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rlabel .dur{color:var(--muted);font-size:10px;flex-shrink:0}
   .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
   .track{flex:1;position:relative}
   .bar{position:absolute;height:13px;top:50%;transform:translateY(-50%);border-radius:3px;cursor:default}
-  .bar.prev{height:6px;top:calc(50% + 8px);opacity:.85;border:none}
+  .bar.prev{height:6px;top:calc(50% + 8px);opacity:.85}
   .bar .fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px 0 0 3px;background:rgba(0,0,0,.22)}
   .gl{position:absolute;top:0;bottom:0;width:1px;background:var(--line);z-index:1}
   .today-line{position:absolute;top:0;bottom:0;width:2px;background:var(--today);z-index:5}
@@ -63,7 +63,7 @@
   .pc-line{position:absolute;top:0;bottom:0;width:2px;background:var(--crit);z-index:5}
   .pc-line .tag{position:absolute;top:-1px;left:3px;font-size:9px;font-weight:700;color:var(--crit);white-space:nowrap}
   .stats{display:flex;gap:0;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line2);border-radius:10px;margin-top:16px;overflow:hidden}
-  .stat{flex:1;min-width:120px;padding:14px 16px;border-right:1px solid var(--line)}
+  .stat{flex:1;min-width:110px;padding:14px 16px;border-right:1px solid var(--line)}
   .stat:last-child{border-right:0}
   .stat .v{font-size:22px;font-weight:600;letter-spacing:-.5px}
   .stat .l{font-size:11px;color:var(--muted);margin-top:2px}
@@ -72,11 +72,10 @@
   .tip{position:fixed;background:#1d1d1b;color:#fff;font-size:11px;padding:8px 11px;border-radius:6px;max-width:280px;z-index:100;pointer-events:none;opacity:0;transition:opacity .1s;line-height:1.5}
   .tip b{color:#fac775}
   .tip .row2{color:#b4b2a9;margin-top:3px}
-  .chgnote{font-size:11px;color:var(--crit);font-weight:600;margin-left:4px}
+  .chgnote{font-size:10px;color:var(--crit);font-weight:700;margin-left:5px}
   .verbar{font-size:11px;color:var(--muted);margin:10px 20px 0;display:flex;gap:18px;flex-wrap:wrap}
   .verbar b{color:var(--ink)}
   footer{text-align:center;font-size:11px;color:var(--muted);padding:20px}
-  .hidden{display:none}
 </style>
 </head>
 <body>
@@ -100,235 +99,140 @@
     <span><i class="sw" style="background:var(--crit-fill)"></i>Critical path</span>
     <span><i class="sw" style="background:var(--hold-fill)"></i>On hold / gated</span>
     <span><i class="sw" style="background:var(--future-fill)"></i>Upcoming</span>
-    <span><i class="sw" style="background:var(--prev)"></i>Baseline (28 Apr) bar</span>
+    <span><i class="sw" style="background:var(--prev)"></i>28 Apr baseline bar</span>
   </div>
 </header>
 
 <div class="verbar" id="verbar"></div>
 
 <div class="banner" id="banner">
-  <b>Engineer's stated critical path (M. Kerse, Maven, 26 May):</b> completion of wastewater &amp; stormwater drainage connections upstream into the existing mains — this unlocks the remaining preload areas that cannot be earthworked until drainage is closed out. Crews are on the final manhole installs (top end) + Valley Grove connection now (~2 weeks). <b>Programme baseline is the 28 Apr Rev A2 — ~4 weeks stale and being revised to add Stage 3A civils + corrected asphalt/kerb sequencing.</b>
+  <b>Full task list from Stoffel's Rev A2 programme (28 Apr 2026).</b> Baseline dates are sequenced from task durations + known anchors and should be reconciled against Stoffel's revised file once circulated. <b>Engineer's stated critical path (M. Kerse, 26 May):</b> wastewater &amp; stormwater connections upstream into the existing mains — these unlock the remaining preload areas. Lot 33 preload extended +6 weeks (Tony, 26 May); Stage 3A civils still to be added; Section 127 not yet lodged.
 </div>
 
 <div class="wrap">
   <div class="gantt">
-    <div class="scroll" id="scroll">
-      <div class="grid" id="grid"></div>
-    </div>
+    <div class="scroll" id="scroll"><div class="grid" id="grid"></div></div>
   </div>
-
   <div class="stats" id="stats"></div>
 </div>
 
 <div class="tip" id="tip"></div>
-<footer>Bespoke Bethlehem · PC date 27 Oct 2026 · Generated 27 May 2026 from Otter.ai site meetings, Maven/Terrane/Superior correspondence · Author: Superior Civil &amp; Earthworks (BOP) Ltd</footer>
+<footer>Bespoke Bethlehem · PC date 27 Oct 2026 · 60 tasks from Rev A2 · Status overlaid from 27 May live pull (Otter + Maven/Terrane/Superior) · Author: Superior Civil &amp; Earthworks (BOP) Ltd</footer>
 
 <script>
-/* ---- Timeline window ---- */
-const T0 = new Date(2026,1,1);   // 1 Feb 2026
-const T1 = new Date(2026,11,15); // 15 Dec 2026
-const TODAY = new Date(2026,4,27);
-const PC = new Date(2026,9,27);
-const totalDays = (T1-T0)/86400000;
-function x(d){ return ((d-T0)/86400000/totalDays)*100; }
-const D = (y,m,day)=>new Date(y,m-1,day);
+const T0=new Date(2026,1,1);
+const T1=new Date(2026,11,15);
+const TODAY=new Date(2026,4,27);
+const PC=new Date(2026,9,27);
+const totalDays=(T1-T0)/86400000;
+function x(d){return ((d-T0)/86400000/totalDays)*100;}
+const D=(y,m,day)=>new Date(y,m-1,day);
 
-/* ---- Task model ----
-   each task: id, name, section, crit(current), status, pct,
-   cur:[start,finish], prev:[start,finish] or null (new task),
-   note: change note for current view
-   status: done | active | hold | future
-*/
-const SECTIONS = [
+const SECTIONS=[
   "Earthworks & Preloads",
-  "Drainage — Wastewater (Public)",
-  "Drainage — Stormwater (Public)",
-  "Roading & Pavement",
-  "Consents & Design",
-  "Stage 3A Civils (new)",
+  "Stormwater — Public",
+  "Stormwater — Private",
+  "Wastewater — Public",
+  "Wastewater — Private",
+  "Roading & Services",
+  "Water Supply",
+  "Stage 3A Civils (to be added)",
   "Site Completion"
 ];
 
-const TASKS = [
-  // ---- Earthworks & Preloads ----
-  {id:71,name:"Lot 33 preloading active",sec:0,crit:true,status:"hold",pct:55,
-    cur:[D(2026,4,20),D(2026,7,8)],prev:[D(2026,4,20),D(2026,6,16)],
-    note:"+6 wks — southern section must stay (Tony 26 May)"},
-  {id:72,name:"Lot 33 remove preload",sec:0,crit:true,status:"future",pct:0,
-    cur:[D(2026,7,9),D(2026,7,20)],prev:[D(2026,6,17),D(2026,6,26)],
-    note:"slipped from baseline on Lot 33 hold"},
-  {id:65,name:"Area 6 cart material",sec:0,crit:false,status:"done",pct:100,
-    cur:[D(2026,3,2),D(2026,4,28)],prev:[D(2026,3,2),D(2026,4,28)],note:""},
-  {id:66,name:"Area 6 preloading active",sec:0,crit:false,status:"active",pct:60,
-    cur:[D(2026,4,28),D(2026,8,20)],prev:[D(2026,4,28),D(2026,8,20)],note:""},
-  {id:73,name:"Stage 3 mulched area — preload removal",sec:0,crit:false,status:"active",pct:80,
-    cur:[D(2026,5,26),D(2026,6,10)],prev:[D(2026,5,12),D(2026,5,26)],
-    note:"back corner released (DN23, 25 May); slow-settle marker pending"},
-  {id:74,name:"Lots 16/17/18 preload",sec:0,crit:false,status:"hold",pct:0,
-    cur:[D(2026,6,15),D(2026,8,1)],prev:[D(2026,5,20),D(2026,7,5)],
-    note:"depths unresolved — geotech inconsistency (26 May); strongwater line first"},
-  {id:75,name:"Structural fill — Area 5 (recovery)",sec:0,crit:false,status:"hold",pct:0,
-    cur:[D(2026,6,12),D(2026,7,10)],prev:null,
-    note:"NEW — fill-first methodology, gated on services completion"},
+const TASKS=[
+  {id:70,name:"Lot 33 Preload — Cart Material (DN08)",sec:0,dur:"3d",crit:false,status:"done",pct:100,cur:[D(2026,4,16),D(2026,4,20)],prev:[D(2026,4,16),D(2026,4,20)],note:""},
+  {id:71,name:"Lot 33 — Preloading Active",sec:0,dur:"108d",crit:true,status:"hold",pct:55,cur:[D(2026,4,20),D(2026,7,8)],prev:[D(2026,4,20),D(2026,6,16)],note:"+6 wks — southern section must stay (Tony 26 May); back corner released (DN23)"},
+  {id:72,name:"Lot 33 — Remove Preload",sec:0,dur:"3d",crit:true,status:"future",pct:0,cur:[D(2026,7,9),D(2026,7,13)],prev:[D(2026,6,17),D(2026,6,19)],note:"slipped with Lot 33 hold"},
+  {id:73,name:"Lot 33 — Level & Compact Structural Fill",sec:0,dur:"5d",crit:false,status:"future",pct:0,cur:[D(2026,7,14),D(2026,7,20)],prev:[D(2026,6,22),D(2026,6,26)],note:""},
+  {id:65,name:"Area 6 Preload — Cart Material On Site",sec:0,dur:"10d",crit:false,status:"done",pct:100,cur:[D(2026,4,14),D(2026,4,28)],prev:[D(2026,4,14),D(2026,4,28)],note:""},
+  {id:66,name:"Area 6 — Preloading Active",sec:0,dur:"98d",crit:false,status:"active",pct:60,cur:[D(2026,4,28),D(2026,8,20)],prev:[D(2026,4,28),D(2026,8,20)],note:"stage 3 mulched area preload approaching removal"},
+  {id:67,name:"Area 6 — Remove Preload",sec:0,dur:"15d",crit:false,status:"future",pct:0,cur:[D(2026,8,21),D(2026,9,10)],prev:[D(2026,8,21),D(2026,9,10)],note:""},
+  {id:68,name:"Area 6 — Level & Compact Structural Fill",sec:0,dur:"10d",crit:false,status:"future",pct:0,cur:[D(2026,9,11),D(2026,9,24)],prev:[D(2026,9,11),D(2026,9,24)],note:""},
+  {id:41,name:"Cut/Fill Area 5",sec:0,dur:"109d",crit:false,status:"hold",pct:0,cur:[D(2026,6,15),D(2026,11,13)],prev:[D(2026,5,18),D(2026,10,16)],note:"structural-fill-first methodology to aid recovery; gated on services"},
+  {id:42,name:"Area 6 Structural Fill → Area 5",sec:0,dur:"20d",crit:false,status:"future",pct:0,cur:[D(2026,9,11),D(2026,10,8)],prev:[D(2026,9,11),D(2026,10,8)],note:""},
+  {id:45,name:"Area 5 — Preload Channel",sec:0,dur:"99d",crit:false,status:"future",pct:0,cur:[D(2026,6,20),D(2026,11,6)],prev:[D(2026,5,25),D(2026,10,12)],note:""},
+  {id:46,name:"Area 5 — Remove Preload",sec:0,dur:"10d",crit:false,status:"future",pct:0,cur:[D(2026,11,7),D(2026,11,20)],prev:[D(2026,10,13),D(2026,10,26)],note:""},
+  {id:47,name:"Cut/Fill Stage 2A",sec:0,dur:"14d",crit:true,status:"hold",pct:0,cur:[D(2026,6,12),D(2026,7,1)],prev:[D(2026,5,10),D(2026,5,29)],note:"blocked by Section 127 lodgement + design handover"},
+  {id:36,name:"Cut/Fill Area 3",sec:0,dur:"3d",crit:false,status:"future",pct:0,cur:[D(2026,7,2),D(2026,7,6)],prev:[D(2026,5,30),D(2026,6,3)],note:""},
 
-  // ---- Wastewater (Public) ----
-  {id:117,name:"WW final manhole installs (top end)",sec:1,crit:true,status:"active",pct:65,
-    cur:[D(2026,5,18),D(2026,6,8)],prev:[D(2026,4,15),D(2026,4,30)],
-    note:"on critical path — gates all downstream earthworks"},
-  {id:118,name:"Valley Grove connection",sec:1,crit:true,status:"active",pct:40,
-    cur:[D(2026,5,18),D(2026,6,10)],prev:[D(2026,4,20),D(2026,5,5)],
-    note:"crews focused here now (~2 wks)"},
-  {id:119,name:"Proposed WW line — test & make live",sec:1,crit:true,status:"hold",pct:0,
-    cur:[D(2026,6,8),D(2026,6,18)],prev:null,
-    note:"NEW — must be live before stockpiling over it (settlement risk)"},
-  {id:120,name:"Armadillo final connections (tie-in)",sec:1,crit:true,status:"hold",pct:0,
-    cur:[D(2026,6,10),D(2026,6,24)],prev:[D(2026,5,1),D(2026,5,15)],
-    note:"Armadillo holds connection ticket; re-establishing on site"},
-  {id:121,name:"WW infiltration testing (all MHs)",sec:1,crit:false,status:"hold",pct:0,
-    cur:[D(2026,6,12),D(2026,6,30)],prev:null,
-    note:"NEW — TCC (Kees) requirement, 27 May"},
+  {id:76,name:"Wingwall A0 → SWMH A1",sec:1,dur:"5d",crit:true,status:"active",pct:70,cur:[D(2026,5,20),D(2026,5,27)],prev:[D(2026,4,15),D(2026,4,21)],note:"wing wall in; road ready for subgrade trim"},
+  {id:81,name:"SWMH E2 → A0",sec:1,dur:"4d",crit:true,status:"active",pct:50,cur:[D(2026,5,25),D(2026,5,29)],prev:[D(2026,4,20),D(2026,4,24)],note:"upstream connection to mains — critical path"},
+  {id:83,name:"SWMH E1 → A4",sec:1,dur:"4d",crit:true,status:"hold",pct:0,cur:[D(2026,6,1),D(2026,6,5)],prev:[D(2026,4,27),D(2026,4,30)],note:""},
+  {id:84,name:"SWMH E1 → A5",sec:1,dur:"4d",crit:false,status:"hold",pct:0,cur:[D(2026,6,8),D(2026,6,12)],prev:[D(2026,5,1),D(2026,5,6)],note:""},
+  {id:85,name:"SWMH E1 → Stage 4",sec:1,dur:"4d",crit:false,status:"future",pct:0,cur:[D(2026,6,15),D(2026,6,19)],prev:[D(2026,5,7),D(2026,5,12)],note:""},
+  {id:86,name:"Insitu Manhole A1",sec:1,dur:"28d",crit:false,status:"active",pct:40,cur:[D(2026,5,18),D(2026,6,25)],prev:[D(2026,4,15),D(2026,5,22)],note:""},
+  {id:87,name:"Finish Manholes 8off",sec:1,dur:"12d",crit:false,status:"hold",pct:10,cur:[D(2026,6,18),D(2026,7,5)],prev:[D(2026,5,20),D(2026,6,5)],note:"SW manholes need risers to finished road level; 500mm lid-depth dispensation w/ TCC"},
+  {id:88,name:"Lot/Unit Connections 18off",sec:1,dur:"30d",crit:false,status:"future",pct:0,cur:[D(2026,7,6),D(2026,8,17)],prev:[D(2026,6,8),D(2026,7,20)],note:""},
+  {id:91,name:"Rock Rip Rap for Creek",sec:1,dur:"10d",crit:false,status:"hold",pct:10,cur:[D(2026,6,22),D(2026,7,6)],prev:[D(2026,5,25),D(2026,6,8)],note:"value-engineering review — gabion vs riprap vs concrete; supply uncertain"},
 
-  // ---- Stormwater (Public) ----
-  {id:130,name:"SW upstream connections to mains",sec:2,crit:true,status:"active",pct:50,
-    cur:[D(2026,5,20),D(2026,6,15)],prev:[D(2026,4,18),D(2026,5,10)],
-    note:"critical path with WW — unlocks preload areas"},
-  {id:131,name:"Wing wall + riprap / gabion (overland flow)",sec:2,crit:false,status:"hold",pct:10,
-    cur:[D(2026,6,15),D(2026,7,15)],prev:[D(2026,5,15),D(2026,6,10)],
-    note:"design under value-engineering review (gabion vs riprap)"},
-  {id:132,name:"SW manhole risers to finished level",sec:2,crit:false,status:"hold",pct:0,
-    cur:[D(2026,6,18),D(2026,7,5)],prev:[D(2026,5,20),D(2026,6,5)],
-    note:"500mm lid-depth dispensation being raised w/ TCC"},
-  {id:133,name:"Westmoreland culvert clean-out",sec:2,crit:false,status:"future",pct:0,
-    cur:[D(2026,7,1),D(2026,7,10)],prev:[D(2026,6,1),D(2026,6,10)],
-    note:"TCC correspondence to be located (Stoffel/TCC)"},
+  {id:102,name:"SW Private: Install Laterals 9off",sec:2,dur:"14d",crit:false,status:"future",pct:0,cur:[D(2026,7,7),D(2026,7,24)],prev:[D(2026,6,8),D(2026,6,25)],note:""},
+  {id:103,name:"SW Private: Finish Manholes 9off",sec:2,dur:"15d",crit:false,status:"future",pct:0,cur:[D(2026,7,27),D(2026,8,14)],prev:[D(2026,6,26),D(2026,7,16)],note:""},
 
-  // ---- Roading & Pavement ----
-  {id:160,name:"Subgrade trim (wing wall road)",sec:3,crit:false,status:"active",pct:30,
-    cur:[D(2026,5,25),D(2026,6,12)],prev:[D(2026,5,1),D(2026,5,20)],
-    note:"GPS on site; place GAP65 (below subgrade level)"},
-  {id:161,name:"GAP65 / GAP40 basecourse",sec:3,crit:false,status:"future",pct:0,
-    cur:[D(2026,6,12),D(2026,7,15)],prev:[D(2026,5,20),D(2026,6,20)],note:""},
-  {id:163,name:"Kerbing",sec:3,crit:false,status:"future",pct:0,
-    cur:[D(2026,7,20),D(2026,8,20)],prev:[D(2026,6,25),D(2026,7,25)],
-    note:"sequencing corrected in revised programme"},
-  {id:164,name:"Asphalt",sec:3,crit:false,status:"future",pct:0,
-    cur:[D(2026,8,20),D(2026,9,20)],prev:[D(2026,7,25),D(2026,8,25)],
-    note:"sequencing corrected — follows kerbing"},
+  {id:116,name:"WW Public: Finish Manholes 6off",sec:3,dur:"10d",crit:true,status:"active",pct:65,cur:[D(2026,5,18),D(2026,6,1)],prev:[D(2026,4,15),D(2026,4,28)],note:"final manhole installs top end — crews focused here now"},
+  {id:117,name:"WW Public: CCTV + Flush",sec:3,dur:"5d",crit:true,status:"hold",pct:0,cur:[D(2026,6,2),D(2026,6,8)],prev:[D(2026,4,29),D(2026,5,5)],note:""},
+  {id:118,name:"WW Public: Council Review",sec:3,dur:"5d",crit:true,status:"hold",pct:0,cur:[D(2026,6,9),D(2026,6,15)],prev:[D(2026,5,6),D(2026,5,12)],note:"+ infiltration testing all MHs (TCC/Kees req, 27 May)"},
+  {id:119,name:"TCC Approval — Hook-on EX SSMH86045",sec:3,dur:"5d",crit:true,status:"hold",pct:0,cur:[D(2026,6,16),D(2026,6,22)],prev:[D(2026,5,13),D(2026,5,19)],note:"Valley Grove connection; Armadillo holds connection ticket"},
+  {id:120,name:"Decommission Existing WW Line",sec:3,dur:"7d",crit:true,status:"hold",pct:0,cur:[D(2026,6,23),D(2026,7,1)],prev:[D(2026,5,20),D(2026,5,28)],note:"proposed line must be tested & live before stockpiling over it (settlement risk)"},
 
-  // ---- Consents & Design ----
-  {id:47,name:"Section 127 resource consent — lodge",sec:4,crit:true,status:"hold",pct:20,
-    cur:[D(2026,5,27),D(2026,6,10)],prev:[D(2026,4,20),D(2026,5,5)],
-    note:"NOT lodged — benching methodology + neighbour consent gating; blocks Stage 2A"},
-  {id:48,name:"Stage 2A design handover (Manbir → Mike)",sec:4,crit:true,status:"active",pct:30,
-    cur:[D(2026,5,26),D(2026,5,30)],prev:[D(2026,4,25),D(2026,5,2)],
-    note:"URGENT — Manbir departing this week"},
-  {id:49,name:"Benching methodology — agree (Tony+Manbir)",sec:4,crit:false,status:"active",pct:40,
-    cur:[D(2026,5,26),D(2026,5,30)],prev:null,note:"NEW — must align with geotech sign-off"},
+  {id:125,name:"WW Private: SSMH 1-7 → 1-8",sec:4,dur:"4d",crit:false,status:"future",pct:0,cur:[D(2026,7,2),D(2026,7,7)],prev:[D(2026,5,29),D(2026,6,3)],note:""},
+  {id:126,name:"WW Private: SSMH 1-8 → 1-9",sec:4,dur:"4d",crit:false,status:"future",pct:0,cur:[D(2026,7,8),D(2026,7,13)],prev:[D(2026,6,4),D(2026,6,9)],note:""},
+  {id:127,name:"WW Private: SSMH 1-9 → 1-10",sec:4,dur:"4d",crit:false,status:"future",pct:0,cur:[D(2026,7,14),D(2026,7,17)],prev:[D(2026,6,10),D(2026,6,15)],note:""},
+  {id:128,name:"WW Private: SSMH 1-9 → SSMH 2-1",sec:4,dur:"4d",crit:false,status:"future",pct:0,cur:[D(2026,7,20),D(2026,7,23)],prev:[D(2026,6,16),D(2026,6,19)],note:""},
+  {id:129,name:"WW Private: SSMH 2-1 → 2-2",sec:4,dur:"4d",crit:false,status:"future",pct:0,cur:[D(2026,7,24),D(2026,7,29)],prev:[D(2026,6,22),D(2026,6,25)],note:""},
+  {id:130,name:"WW Private: SSMH 2-2 → 2-3",sec:4,dur:"4d",crit:false,status:"future",pct:0,cur:[D(2026,7,30),D(2026,8,4)],prev:[D(2026,6,26),D(2026,7,1)],note:""},
+  {id:131,name:"WW Private: Lot/Unit Connections 11off",sec:4,dur:"15d",crit:false,status:"future",pct:0,cur:[D(2026,8,5),D(2026,8,25)],prev:[D(2026,7,2),D(2026,7,22)],note:""},
+  {id:132,name:"WW Private: Finish Manholes 8off",sec:4,dur:"12d",crit:false,status:"future",pct:0,cur:[D(2026,8,26),D(2026,9,11)],prev:[D(2026,7,23),D(2026,8,7)],note:""},
 
-  // ---- Stage 3A Civils (new) ----
-  {id:200,name:"Stage 3A civils — add to programme",sec:5,crit:false,status:"hold",pct:0,
-    cur:[D(2026,5,27),D(2026,6,5)],prev:null,
-    note:"NEW — missing from baseline (flagged by Michele/Manbir)"},
-  {id:201,name:"Stage 3A civil works",sec:5,crit:false,status:"future",pct:0,
-    cur:[D(2026,9,1),D(2026,10,15)],prev:null,
-    note:"NEW — Sept, follows preload removal; pending GIR memo (Tony)"},
+  {id:157,name:"Roading: Subgrade Prep & Improvement",sec:5,dur:"35d",crit:false,status:"active",pct:30,cur:[D(2026,5,25),D(2026,7,13)],prev:[D(2026,5,1),D(2026,6,18)],note:"GPS on site; place GAP65 (below subgrade level per Maven data)"},
+  {id:158,name:"Roading: Subgrade Trimming & Compaction",sec:5,dur:"35d",crit:false,status:"future",pct:0,cur:[D(2026,7,14),D(2026,8,31)],prev:[D(2026,6,19),D(2026,8,6)],note:""},
+  {id:163,name:"Roading: Road Surfacing Layers",sec:5,dur:"12d",crit:false,status:"future",pct:0,cur:[D(2026,8,24),D(2026,9,9)],prev:[D(2026,7,27),D(2026,8,11)],note:"sequencing corrected in revised programme"},
+  {id:164,name:"Roading: Asphalt 35mm",sec:5,dur:"5d",crit:false,status:"future",pct:0,cur:[D(2026,9,21),D(2026,9,25)],prev:[D(2026,8,24),D(2026,8,28)],note:"asphalt/kerbing sequencing corrected — follows kerbing"},
+  {id:154,name:"Standard Kerb & Channel",sec:5,dur:"4d",crit:false,status:"future",pct:0,cur:[D(2026,9,10),D(2026,9,15)],prev:[D(2026,8,12),D(2026,8,17)],note:"sequencing corrected — precedes asphalt"},
+  {id:136,name:"Utilities: Road Common Service Trench",sec:5,dur:"5d",crit:false,status:"future",pct:0,cur:[D(2026,7,14),D(2026,7,20)],prev:[D(2026,6,19),D(2026,6,25)],note:""},
+  {id:137,name:"Utilities: 50mm uPVC Ducts",sec:5,dur:"5d",crit:false,status:"future",pct:0,cur:[D(2026,7,21),D(2026,7,27)],prev:[D(2026,6,26),D(2026,7,2)],note:""},
 
-  // ---- Site Completion ----
-  {id:300,name:"Final trim, topsoil & landscaping",sec:6,crit:false,status:"future",pct:0,
-    cur:[D(2026,9,20),D(2026,10,20)],prev:[D(2026,8,25),D(2026,9,25)],note:""},
-  {id:301,name:"Practical Completion",sec:6,crit:true,status:"future",pct:0,
-    cur:[D(2026,10,27),D(2026,10,27)],prev:[D(2026,10,27),D(2026,10,27)],
-    note:"PC date fixed; current sequencing at risk against it"}
+  {id:144,name:"Water: 180mm PE100 Main",sec:6,dur:"14d",crit:false,status:"future",pct:0,cur:[D(2026,7,14),D(2026,7,31)],prev:[D(2026,6,19),D(2026,7,8)],note:""},
+  {id:147,name:"Water: Swap",sec:6,dur:"5d",crit:false,status:"future",pct:0,cur:[D(2026,8,3),D(2026,8,7)],prev:[D(2026,7,9),D(2026,7,15)],note:""},
+  {id:148,name:"Water: Pressure Testing",sec:6,dur:"5d",crit:false,status:"future",pct:0,cur:[D(2026,8,10),D(2026,8,14)],prev:[D(2026,7,16),D(2026,7,22)],note:""},
+  {id:149,name:"Water: Disinfection & FAC Test",sec:6,dur:"5d",crit:false,status:"future",pct:0,cur:[D(2026,8,17),D(2026,8,21)],prev:[D(2026,7,23),D(2026,7,29)],note:""},
+  {id:150,name:"Water: E-coli Sampling",sec:6,dur:"3d",crit:false,status:"future",pct:0,cur:[D(2026,8,24),D(2026,8,26)],prev:[D(2026,7,30),D(2026,8,3)],note:""},
+  {id:151,name:"Water: Connection to Public Main",sec:6,dur:"2d",crit:false,status:"future",pct:0,cur:[D(2026,8,27),D(2026,8,28)],prev:[D(2026,8,4),D(2026,8,5)],note:""},
+  {id:152,name:"Water: Commissioning",sec:6,dur:"1d",crit:false,status:"future",pct:0,cur:[D(2026,8,31),D(2026,8,31)],prev:[D(2026,8,6),D(2026,8,6)],note:""},
+
+  {id:200,name:"Stage 3A — add civils to programme",sec:7,dur:"5d",crit:false,status:"hold",pct:0,cur:[D(2026,5,27),D(2026,6,3)],prev:null,note:"NEW — missing from Rev A2 baseline (flagged by Michele/Manbir 26 May)"},
+  {id:201,name:"Stage 3A — Civil Works",sec:7,dur:"45d",crit:false,status:"future",pct:0,cur:[D(2026,9,1),D(2026,10,15)],prev:null,note:"NEW — Sept, follows preload removal; pending GIR memo (Tony)"},
+
+  {id:172,name:"SITE COMPLETE",sec:8,dur:"2d",crit:true,status:"future",pct:0,cur:[D(2026,10,20),D(2026,10,21)],prev:[D(2026,9,22),D(2026,9,23)],note:"current sequencing tight against fixed PC"},
+  {id:173,name:"Final Inspection",sec:8,dur:"1d",crit:true,status:"future",pct:0,cur:[D(2026,10,22),D(2026,10,22)],prev:[D(2026,9,24),D(2026,9,24)],note:""},
+  {id:174,name:"Cleanup & Waste Removal",sec:8,dur:"1d",crit:false,status:"future",pct:0,cur:[D(2026,10,23),D(2026,10,23)],prev:[D(2026,9,25),D(2026,9,25)],note:""},
+  {id:175,name:"Removal of Facilities",sec:8,dur:"2d",crit:false,status:"future",pct:0,cur:[D(2026,10,26),D(2026,10,27)],prev:[D(2026,9,28),D(2026,9,29)],note:"PC date 27 Oct 2026 (fixed)"}
 ];
 
-let view='current';
-let critOnly=false;
-
+let view='current', critOnly=false;
 const months=[];
-{let d=new Date(T0); while(d<T1){months.push(new Date(d)); d=new Date(d.getFullYear(),d.getMonth()+1,1);}}
+{let d=new Date(T0);while(d<T1){months.push(new Date(d));d=new Date(d.getFullYear(),d.getMonth()+1,1);}}
 const MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function statusColor(s){return {done:'var(--done-fill)',active:'var(--active-fill)',hold:'var(--hold-fill)',future:'var(--future-fill)'}[s];}
 
-function statusColor(s){
-  return {done:'var(--done-fill)',active:'var(--active-fill)',hold:'var(--hold-fill)',future:'var(--future-fill)'}[s];
-}
-
-function render(){
-  const grid=document.getElementById('grid');
-  // month header
-  let html='<div class="months"><div class="lbl-head">Task</div><div class="month-cells">';
-  months.forEach(m=>{html+=`<div class="mcell">${MN[m.getMonth()]}</div>`;});
-  html+='</div></div>';
-
-  SECTIONS.forEach((sec,si)=>{
-    let tks=TASKS.filter(t=>t.sec===si);
-    if(critOnly) tks=tks.filter(t=>t.crit);
-    if(!tks.length) return;
-    html+=`<div class="section"><div class="sec-title">${sec}</div>`;
-    tks.forEach(t=>{
-      const showPrev = (view==='previous'||view==='compare') && t.prev;
-      const showCur = (view==='current'||view==='compare');
-      const isNew = !t.prev;
-      html+=`<div class="row" data-id="${t.id}">
-        <div class="rlabel">
-          <span class="id">${t.id}</span>
-          ${t.crit?'<span class="dot" style="background:var(--crit)"></span>':''}
-          <span class="nm">${t.name}${isNew&&view!=='previous'?'<span class="chgnote">NEW</span>':''}</span>
-        </div>
-        <div class="track">`;
-      // gridlines
-      months.forEach(m=>{html+=`<div class="gl" style="left:${x(m)}%"></div>`;});
-      // today + PC
-      html+=`<div class="today-line" style="left:${x(TODAY)}%"></div>`;
-      html+=`<div class="pc-line" style="left:${x(PC)}%"></div>`;
-      // previous bar
-      if(showPrev){
-        const l=x(t.prev[0]), w=Math.max(x(t.prev[1])-x(t.prev[0]),0.4);
-        html+=`<div class="bar prev" style="left:${l}%;width:${w}%;background:var(--prev)"></div>`;
-      }
-      // current bar
-      if(showCur && !(view==='previous')){
-        const l=x(t.cur[0]), w=Math.max(x(t.cur[1])-x(t.cur[0]),0.4);
-        const col= t.crit && t.status!=='done' ? 'var(--crit-fill)' : statusColor(t.status);
-        const bord= t.crit && t.status!=='done' ? 'border:1px solid var(--crit);' : '';
-        html+=`<div class="bar cur" style="left:${l}%;width:${w}%;background:${col};${bord}">
-          ${t.pct>0&&t.pct<100?`<div class="fill" style="width:${t.pct}%"></div>`:''}
-        </div>`;
-      }
-      // if previous-only view, show prev as the main bar styled normally
-      if(view==='previous' && t.prev){
-        // already drawn as thin; redraw as full
-      }
-      html+=`</div></div>`;
-    });
-    html+='</div>';
-  });
-  grid.innerHTML=html;
-  attachTips();
-  updateStats();
-  updateVerbar();
-}
-
-/* For 'previous' view we want the baseline bars shown full-height, not thin.
-   Re-render handles this by special-casing below via class swap. */
 function setView(v){
   view=v;
   document.getElementById('vCurrent').classList.toggle('active',v==='current');
   document.getElementById('vPrev').classList.toggle('active',v==='previous');
   document.getElementById('vCompare').classList.toggle('active',v==='compare');
-  renderView();
+  render();
 }
+function toggleCrit(){critOnly=!critOnly;document.getElementById('critBtn').classList.toggle('active',critOnly);render();}
 
-function renderView(){
-  // custom render to handle previous-as-full
+function render(){
   const grid=document.getElementById('grid');
   let html='<div class="months"><div class="lbl-head">Task</div><div class="month-cells">';
   months.forEach(m=>{html+=`<div class="mcell">${MN[m.getMonth()]}</div>`;});
   html+='</div></div>';
-
   SECTIONS.forEach((sec,si)=>{
     let tks=TASKS.filter(t=>t.sec===si);
     if(critOnly) tks=tks.filter(t=>t.crit);
-    if(view==='previous') tks=tks.filter(t=>t.prev); // baseline didn't have NEW tasks
+    if(view==='previous') tks=tks.filter(t=>t.prev);
     if(!tks.length) return;
     html+=`<div class="section"><div class="sec-title">${sec}</div>`;
     tks.forEach(t=>{
@@ -337,100 +241,79 @@ function renderView(){
         <div class="rlabel">
           <span class="id">${t.id}</span>
           ${t.crit?'<span class="dot" style="background:var(--crit)"></span>':''}
-          <span class="nm">${t.name}${isNew&&view==='compare'?'<span class="chgnote">NEW</span>':''}</span>
+          <span class="nm">${t.name}${isNew&&view!=='previous'?'<span class="chgnote">NEW</span>':''}</span>
+          <span class="dur">${t.dur}</span>
         </div>
         <div class="track">`;
       months.forEach(m=>{html+=`<div class="gl" style="left:${x(m)}%"></div>`;});
       html+=`<div class="today-line" style="left:${x(TODAY)}%"><span class="tag">27 May</span></div>`;
       html+=`<div class="pc-line" style="left:${x(PC)}%"><span class="tag">PC 27 Oct</span></div>`;
-
       if(view==='previous'){
-        const l=x(t.prev[0]), w=Math.max(x(t.prev[1])-x(t.prev[0]),0.4);
-        html+=`<div class="bar cur" style="left:${l}%;width:${w}%;background:var(--prev)"></div>`;
-      } else if(view==='current'){
-        const l=x(t.cur[0]), w=Math.max(x(t.cur[1])-x(t.cur[0]),0.4);
-        const col= t.crit && t.status!=='done' ? 'var(--crit-fill)' : statusColor(t.status);
-        const bord= t.crit && t.status!=='done' ? 'border:1px solid var(--crit);' : '';
-        html+=`<div class="bar cur" style="left:${l}%;width:${w}%;background:${col};${bord}">
-          ${t.pct>0&&t.pct<100?`<div class="fill" style="width:${t.pct}%"></div>`:''}</div>`;
-      } else { // compare
-        if(t.prev){
-          const l=x(t.prev[0]), w=Math.max(x(t.prev[1])-x(t.prev[0]),0.4);
-          html+=`<div class="bar prev" style="left:${l}%;width:${w}%;background:var(--prev)"></div>`;
-        }
-        const l=x(t.cur[0]), w=Math.max(x(t.cur[1])-x(t.cur[0]),0.4);
-        const col= t.crit && t.status!=='done' ? 'var(--crit-fill)' : statusColor(t.status);
-        const bord= t.crit && t.status!=='done' ? 'border:1px solid var(--crit);' : '';
-        const offset = t.prev ? 'top:calc(50% - 5px);' : '';
-        html+=`<div class="bar cur" style="left:${l}%;width:${w}%;background:${col};${bord}${offset}">
-          ${t.pct>0&&t.pct<100?`<div class="fill" style="width:${t.pct}%"></div>`:''}</div>`;
+        const l=x(t.prev[0]),w=Math.max(x(t.prev[1])-x(t.prev[0]),0.4);
+        html+=`<div class="bar" style="left:${l}%;width:${w}%;background:var(--prev)"></div>`;
+      }else if(view==='current'){
+        const l=x(t.cur[0]),w=Math.max(x(t.cur[1])-x(t.cur[0]),0.4);
+        const col=t.crit&&t.status!=='done'?'var(--crit-fill)':statusColor(t.status);
+        const bord=t.crit&&t.status!=='done'?'border:1px solid var(--crit);':'';
+        html+=`<div class="bar" style="left:${l}%;width:${w}%;background:${col};${bord}">${t.pct>0&&t.pct<100?`<div class="fill" style="width:${t.pct}%"></div>`:''}</div>`;
+      }else{
+        if(t.prev){const l=x(t.prev[0]),w=Math.max(x(t.prev[1])-x(t.prev[0]),0.4);
+          html+=`<div class="bar prev" style="left:${l}%;width:${w}%;background:var(--prev)"></div>`;}
+        const l=x(t.cur[0]),w=Math.max(x(t.cur[1])-x(t.cur[0]),0.4);
+        const col=t.crit&&t.status!=='done'?'var(--crit-fill)':statusColor(t.status);
+        const bord=t.crit&&t.status!=='done'?'border:1px solid var(--crit);':'';
+        const off=t.prev?'top:calc(50% - 5px);':'';
+        html+=`<div class="bar" style="left:${l}%;width:${w}%;background:${col};${bord}${off}">${t.pct>0&&t.pct<100?`<div class="fill" style="width:${t.pct}%"></div>`:''}</div>`;
       }
       html+=`</div></div>`;
     });
     html+='</div>';
   });
   grid.innerHTML=html;
-  attachTips();
-  updateStats();
-  updateVerbar();
+  attachTips();updateStats();updateVerbar();
 }
 
 function updateVerbar(){
   const vb=document.getElementById('verbar');
-  let label = view==='current' ? 'Showing <b>current programme</b> (as at 27 May 2026)'
-    : view==='previous' ? 'Showing <b>28 Apr Rev A2 baseline</b> (the version everyone is still working off)'
-    : 'Comparing — purple = 28 Apr baseline, coloured = current 27 May';
+  const label=view==='current'?'Showing <b>current programme</b> (as at 27 May 2026)'
+    :view==='previous'?'Showing <b>28 Apr Rev A2 baseline</b> (the version everyone is still working off)'
+    :'Comparing — purple = 28 Apr baseline, coloured = current 27 May';
   const newCount=TASKS.filter(t=>!t.prev).length;
-  vb.innerHTML = `${label} &nbsp;·&nbsp; ${newCount} new tasks added since baseline &nbsp;·&nbsp; ${TASKS.filter(t=>t.crit).length} critical-path items`;
+  vb.innerHTML=`${label} &nbsp;·&nbsp; ${TASKS.length} tasks total &nbsp;·&nbsp; ${newCount} new since baseline &nbsp;·&nbsp; ${TASKS.filter(t=>t.crit).length} critical-path items`;
 }
-
 function updateStats(){
   const daysToPC=Math.round((PC-TODAY)/86400000);
   const done=TASKS.filter(t=>t.status==='done').length;
   const active=TASKS.filter(t=>t.status==='active').length;
   const hold=TASKS.filter(t=>t.status==='hold').length;
-  const slipped=TASKS.filter(t=>t.prev && t.cur[1]>t.prev[1]).length;
+  const slipped=TASKS.filter(t=>t.prev&&t.cur[1]>t.prev[1]).length;
   document.getElementById('stats').innerHTML=`
     <div class="stat"><div class="v">${daysToPC}</div><div class="l">days to PC (27 Oct)</div></div>
-    <div class="stat"><div class="v" style="color:var(--done)">${done}</div><div class="l">tasks complete</div></div>
+    <div class="stat"><div class="v" style="color:var(--done)">${done}</div><div class="l">complete</div></div>
     <div class="stat"><div class="v" style="color:var(--active)">${active}</div><div class="l">in progress</div></div>
     <div class="stat"><div class="v warn">${hold}</div><div class="l">on hold / gated</div></div>
-    <div class="stat"><div class="v bad">${slipped}</div><div class="l">tasks slipped vs baseline</div></div>
-  `;
+    <div class="stat"><div class="v bad">${slipped}</div><div class="l">slipped vs baseline</div></div>`;
 }
-
-function toggleCrit(){
-  critOnly=!critOnly;
-  document.getElementById('critBtn').classList.toggle('active',critOnly);
-  renderView();
-}
-function scrollToday(){
-  const sc=document.getElementById('scroll');
-  const grid=document.getElementById('grid');
-  sc.scrollLeft = (x(TODAY)/100)*grid.scrollWidth - sc.clientWidth/2;
-}
-
+function scrollToday(){const sc=document.getElementById('scroll'),grid=document.getElementById('grid');sc.scrollLeft=(x(TODAY)/100)*grid.scrollWidth-sc.clientWidth/2;}
 function attachTips(){
   const tip=document.getElementById('tip');
   document.querySelectorAll('.row').forEach(row=>{
-    const t=TASKS.find(x=>x.id==row.dataset.id);
+    const t=TASKS.find(z=>z.id==row.dataset.id);
     row.addEventListener('mousemove',e=>{
       const fmt=d=>`${d.getDate()} ${MN[d.getMonth()]}`;
-      let h=`<b>${t.id} · ${t.name}</b>`;
+      let h=`<b>${t.id} · ${t.name} (${t.dur})</b>`;
       h+=`<div class="row2">Current: ${fmt(t.cur[0])} → ${fmt(t.cur[1])}${t.pct?` · ${t.pct}% done`:''}</div>`;
-      if(t.prev) h+=`<div class="row2">Baseline: ${fmt(t.prev[0])} → ${fmt(t.prev[1])}</div>`;
-      else h+=`<div class="row2">No baseline — new task</div>`;
+      h+= t.prev?`<div class="row2">Baseline: ${fmt(t.prev[0])} → ${fmt(t.prev[1])}</div>`:`<div class="row2">No baseline — new task</div>`;
       if(t.note) h+=`<div class="row2" style="color:#fac775">${t.note}</div>`;
-      tip.innerHTML=h; tip.style.opacity=1;
-      let lx=e.clientX+14, ly=e.clientY+14;
+      tip.innerHTML=h;tip.style.opacity=1;
+      let lx=e.clientX+14,ly=e.clientY+14;
       if(lx+290>window.innerWidth) lx=e.clientX-294;
-      tip.style.left=lx+'px'; tip.style.top=ly+'px';
+      tip.style.left=lx+'px';tip.style.top=ly+'px';
     });
     row.addEventListener('mouseleave',()=>{tip.style.opacity=0;});
   });
 }
-
-renderView();
+render();
 setTimeout(scrollToday,100);
 </script>
 </body>
